@@ -1,0 +1,49 @@
+<?php
+/**
+ * A Magento 2 module named Magestat/SplitOrder
+ * Copyright (C) 2018 Magestat
+ *
+ * This file included in Magestat/SplitOrder is licensed under OSL 3.0
+ *
+ * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * Please see LICENSE.txt for the full text of the OSL 3.0 license
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/** @var $block \Magestat\SplitOrder\Block\Checkout\Success */ 
+
+$orderArray = $block->getOrderArray();
+?>
+<div class="checkout-success">
+    <?php if ($block->getOrderId()):?>
+        <?php if ($orderArray):?>
+            <p><?= /* @escapeNotVerified */ __('Your orders number are:');?></p>
+            <ul>
+            <?php foreach ($orderArray as $key => $order): ?>
+                <?php if ($block->getCanViewOrder()) :?>
+                    <li><?= sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($order['view_order_url']), $block->escapeHtml($order['order_id'])) ?></li>
+                <?php else :?>
+                    <li><?= $block->escapeHtml($order['order_id']) ?></li>
+                <?php endif;?>
+            <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <?php if ($block->getCanViewOrder()) :?>
+                <p><?= __('Your order number is: %1.', sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($block->getViewOrderUrl()), $block->escapeHtml($block->getOrderId()))) ?></p>
+            <?php else: ?>
+                <p><?= __('Your order # is: <span>%1</span>.', $block->escapeHtml($block->getOrderId())) ?></p>
+            <?php endif;?>
+        <?php endif; ?>
+            <p><?= /* @escapeNotVerified */ __('We\'ll email you an order confirmation with details and tracking info.') ?></p>
+    <?php endif;?>
+
+    <?= $block->getAdditionalInfoHtml() ?>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->getContinueUrl() ?>"><span><?= /* @escapeNotVerified */ __('Continue Shopping') ?></span></a>
+        </div>
+    </div>
+</div>

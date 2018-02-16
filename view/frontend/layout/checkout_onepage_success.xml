@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * A Magento 2 module named Magestat/SplitOrder
+ * Copyright (C) 2018 Magestat
+ *
+ * This file included in Magestat/SplitOrder is licensed under OSL 3.0
+ *
+ * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * Please see LICENSE.txt for the full text of the OSL 3.0 license
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance dc" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceBlock name="checkout.success">
+        <action method="setTemplate">
+            <argument name="template" xsi:type="string">Magestat_SplitOrder::success.phtml</argument>
+        </action>
+    </referenceBlock>
+</page>
