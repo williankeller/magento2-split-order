@@ -38,29 +38,29 @@ class QuoteManagement extends \Magento\Quote\Model\QuoteManagement
 
         foreach ($quote->getAllItems() as $item) {
             // Init Quote Split.
-            $quoteSplit = $this->quoteFactory->create();
-            $quoteSplit->setStoreId($quote->getStoreId());
-            $quoteSplit->setCustomer($quote->getCustomer());
-            $quoteSplit->setCustomerIsGuest($quote->getCustomerIsGuest());
+            $splitQuote = $this->quoteFactory->create();
+            $splitQuote->setStoreId($quote->getStoreId());
+            $splitQuote->setCustomer($quote->getCustomer());
+            $splitQuote->setCustomerIsGuest($quote->getCustomerIsGuest());
 
             if ($quote->getCheckoutMethod() === self::METHOD_GUEST) {
-                $quoteSplit->setCustomerEmail($customerEmail);
-                $quoteSplit->setCustomerGroupId(\Magento\Customer\Api\Data\GroupInterface::NOT_LOGGED_IN_ID);
+                $splitQuote->setCustomerEmail($customerEmail);
+                $splitQuote->setCustomerGroupId(\Magento\Customer\Api\Data\GroupInterface::NOT_LOGGED_IN_ID);
             }
 
-            // Save quoteSplit in order to have a quote ID for item.
-            $this->quoteRepository->save($quoteSplit);
+            // Save splitQuote in order to have a quote ID for item.
+            $this->quoteRepository->save($splitQuote);
 
-            // Add item and init Id to be added to quoteSplit collection.
+            // Add item and init Id to be added to splitQuote collection.
             $item->setId(null);
-            $quoteSplit->addItem($item);
+            $splitQuote->addItem($item);
 
             // Set addresses.
-            $quoteSplit->getBillingAddress()->setData($billingAddress);
-            $quoteSplit->getShippingAddress()->setData($shippingAddress);
+            $splitQuote->getBillingAddress()->setData($billingAddress);
+            $splitQuote->getShippingAddress()->setData($shippingAddress);
 
             // Set original payment method.
-            $quoteSplit->getPayment()->setMethod($paymentString);
+            $splitQuote->getPayment()->setMethod($paymentString);
             if ($paymentMethod) {
                 $paymentMethod->setChecks([
                     \Magento\Payment\Model\Method\AbstractMethod::CHECK_USE_CHECKOUT,
@@ -69,24 +69,24 @@ class QuoteManagement extends \Magento\Quote\Model\QuoteManagement
                     \Magento\Payment\Model\Method\AbstractMethod::CHECK_ORDER_TOTAL_MIN_MAX,
                     \Magento\Payment\Model\Method\AbstractMethod::CHECK_ZERO_TOTAL,
                 ]);
-                $quoteSplit->getPayment()->setQuote($quoteSplit);
+                $splitQuote->getPayment()->setQuote($splitQuote);
 
                 $data = $paymentMethod->getData();
-                $quoteSplit->getPayment()->importData($data);
+                $splitQuote->getPayment()->importData($data);
             }
 
             // Sets whether the cart is still active.
-            $quoteSplit->setIsActive(true);
+            $splitQuote->setIsActive(true);
 
             // Recollect totals into the quote.
-            $quoteSplit->collectTotals()->save();
+            $splitQuote->collectTotals();
 
             // Dispatch this event as Magento standard once per each quote split.
-            $this->eventManager->dispatch('checkout_submit_before', ['quote' => $quoteSplit]);
-            $this->quoteRepository->save($quoteSplit);
+            $this->eventManager->dispatch('checkout_submit_before', ['quote' => $splitQuote]);
+            $this->quoteRepository->save($splitQuote);
 
             // Submit quote.
-            $order = $this->submit($quoteSplit);
+            $order = $this->submit($splitQuote);
 
             $orders[] = $order;
             $orderIds[] = $order->getId();
@@ -102,8 +102,8 @@ class QuoteManagement extends \Magento\Quote\Model\QuoteManagement
         // To save quote.
         $this->quoteRepository->save($quote);
 
-        $this->checkoutSession->setLastQuoteId($quoteSplit->getId());
-        $this->checkoutSession->setLastSuccessQuoteId($quoteSplit->getId());
+        $this->checkoutSession->setLastQuoteId($splitQuote->getId());
+        $this->checkoutSession->setLastSuccessQuoteId($splitQuote->getId());
         $this->checkoutSession->setLastOrderId($order->getId());
         $this->checkoutSession->setLastRealOrderId($order->getIncrementId());
         $this->checkoutSession->setLastOrderStatus($order->getStatus());

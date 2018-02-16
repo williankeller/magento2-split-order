@@ -30,11 +30,14 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
     protected $httpContext;
 
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface
+     * @var \Magento\Sales\Model\OrderFactory
      */
-    protected $orderFactory;
-    
-    protected $order;
+    protected $_orderFactory;
+
+    /**
+     * @var \Magento\Sales\Model\Order
+     */
+    protected $_order;
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
@@ -56,30 +59,37 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
         $this->_orderConfig     = $orderConfig;
         $this->_isScopePrivate  = true;
         $this->httpContext      = $httpContext;
-        $this->orderFactory     = $orderFactory;
+        $this->_orderFactory    = $orderFactory;
         parent::__construct($context, $checkoutSession, $orderConfig, $httpContext, $data);
     }
 
+    /**
+     * @return boolean|array
+     */
     public function getOrderArray()
     {
         $checkoutSession = $this->_checkoutSession->getQuoteSplitted();
         $splittedOrders = explode(';', $checkoutSession);
 
+        // If number of orders is just like one, kill function.
         if (count($splittedOrders) <= 1) {
             return false;
         }
 
+        // Return prepared block data.
         return $this->prepareOrders($splittedOrders);
     }
 
     /**
-     * Prepares block data
+     * Prepares block data.
      *
-     * @return false|array
+     * @return array
      */
     public function prepareOrders($quotes, $result = [])
     {
+        // Map quotes generated IDs.
         foreach ($quotes as $quote) {
+            // Get order instance based on last order ID.
             $order = $this->getLastRealOrders($quote);
 
             $result[] = [
@@ -99,21 +109,22 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
         }
         return $result;
     }
-    
+
     /**
-     * Get order instance based on last order ID
+     * Get order instance based on last order ID.
      *
+     * @param string $orderId
      * @return \Magento\Sales\Model\Order
      */
     public function getLastRealOrders($orderId)
     {
-        if ($this->order !== null && $orderId == $this->order->getIncrementId()) {
-            return $this->order;
+        if ($this->_order !== null && $orderId == $this->_order->getIncrementId()) {
+            return $this->_order;
         }
-        $this->order = $this->orderFactory->create();
+        $this->_order = $this->_orderFactory->create();
         if ($orderId) {
-            $this->order->loadByIncrementId((int) $orderId);
+            $this->_order->loadByIncrementId((int) $orderId);
         }
-        return $this->order;
+        return $this->_order;
     }
 }
