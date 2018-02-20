@@ -1,6 +1,6 @@
 {
     "name": "magestat/module-split-order",
-    "description": "This extension creates a splitted order for each product added to the cart.",
+    "description": "This extension allows your online store to split the order into an order for each item in the cart.",
     "type": "magento2-module",
     "version": "1.0.0",
     "authors": [
