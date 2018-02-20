@@ -10,7 +10,7 @@
  * Please see LICENSE.txt for the full text of the OSL 3.0 license
  */
 
-namespace Magestat\SplitOrder\Model;
+namespace Magestat\SplitOrder\Plugin;
 
 use Magento\Framework\Exception\LocalizedException;
 
