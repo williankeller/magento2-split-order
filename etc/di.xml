@@ -1,5 +1,24 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
+<!--
+/**
+ * A Magento 2 module named Magestat/SplitOrder
+ * Copyright (C) 2018 Magestat
+ *
+ * This file included in Magestat/SplitOrder is licensed under OSL 3.0
+ *
+ * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * Please see LICENSE.txt for the full text of the OSL 3.0 license
+ */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Quote\Model\QuoteManagement" type="Magestat\SplitOrder\Model\QuoteManagement"/>
+    <!-- Plugins -->
+    <type name="Magento\Quote\Model\QuoteManagement">
+        <plugin name="magestat-splitorder-quote-management" type="Magestat\SplitOrder\Model\QuoteManagement" sortOrder="1"/>
+    </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="save_order_tax" disabled="true"/>
+    </type>
+
+    <!-- Override -->
     <preference for="Magento\Checkout\Block\Onepage\Success" type="Magestat\SplitOrder\Block\Checkout\Success"/>
 </config>

@@ -10,10 +10,12 @@
  * Please see LICENSE.txt for the full text of the OSL 3.0 license
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Magestat_SplitOrder" setup_version="1.0.0">
-        <sequence>
-            <module name="Magento_Checkout"/>
-        </sequence>
-    </module>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magestat_splitorder>
+            <splitorder>
+                <enable>1</enable>
+            </splitorder>
+        </magestat_splitorder>
+    </default>
 </config>
