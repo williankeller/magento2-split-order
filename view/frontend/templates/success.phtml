@@ -21,11 +21,11 @@ $orderArray = $block->getOrderArray();
         <?php if ($orderArray):?>
             <p><?= /* @escapeNotVerified */ __('Your orders number are:');?></p>
             <ul>
-            <?php foreach ($orderArray as $key => $order): ?>
+            <?php foreach ($orderArray as $order => $incremental): ?>
                 <?php if ($block->getCanViewOrder()) :?>
-                    <li><?= sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $block->escapeHtml($order['view_order_url']), $block->escapeHtml($order['order_id'])) ?></li>
+                    <li><?= sprintf('<a href="%s" class="order-number"><strong>%s</strong></a>', $this->getUrl('sales/order/view/', ['order_id' => $order]), $block->escapeHtml($incremental)) ?></li>
                 <?php else :?>
-                    <li><?= $block->escapeHtml($order['order_id']) ?></li>
+                    <li><?= $block->escapeHtml($incremental) ?></li>
                 <?php endif;?>
             <?php endforeach; ?>
             </ul>
