@@ -58,11 +58,11 @@ class QuoteManagement
      */
     protected function _getBillingAddressData($quote)
     {
-        $billingAddress = $quote->getBillingAddress()->getData();
-        unset($billingAddress['id']);
-        unset($billingAddress['quote_id']);
+        $payment = $quote->getBillingAddress()->getData();
+        unset($payment['id']);
+        unset($payment['quote_id']);
 
-        return $billingAddress;
+        return $payment;
     }
 
     /**
@@ -71,11 +71,11 @@ class QuoteManagement
      */
     protected function _getShippingAddressData($quote)
     {
-        $shippingAddress = $quote->getShippingAddress()->getData();
-        unset($shippingAddress['id']);
-        unset($shippingAddress['quote_id']);
+        $shipping = $quote->getShippingAddress()->getData();
+        unset($shipping['id']);
+        unset($shipping['quote_id']);
 
-        return $shippingAddress;
+        return $shipping;
     }
 
     /**
@@ -95,20 +95,20 @@ class QuoteManagement
 
     /**
      * @param object $quote
-     * @param object $splittedQuote
+     * @param object $split
      * @return $this
      */
-    protected function _setCustomerData($quote, $splittedQuote)
+    protected function _setCustomerData($quote, $split)
     {
-        $splittedQuote->setStoreId($quote->getStoreId());
-        $splittedQuote->setCustomer($quote->getCustomer());
-        $splittedQuote->setCustomerIsGuest($quote->getCustomerIsGuest());
+        $split->setStoreId($quote->getStoreId());
+        $split->setCustomer($quote->getCustomer());
+        $split->setCustomerIsGuest($quote->getCustomerIsGuest());
 
         if ($quote->getCheckoutMethod() === \Magento\Quote\Api\CartManagementInterface::METHOD_GUEST) {
-            $splittedQuote->setCustomerId(null);
-            $splittedQuote->setCustomerEmail($quote->getBillingAddress()->getEmail());
-            $splittedQuote->setCustomerIsGuest(true);
-            $splittedQuote->setCustomerGroupId(\Magento\Customer\Api\Data\GroupInterface::NOT_LOGGED_IN_ID);
+            $split->setCustomerId(null);
+            $split->setCustomerEmail($quote->getBillingAddress()->getEmail());
+            $split->setCustomerIsGuest(true);
+            $split->setCustomerGroupId(\Magento\Customer\Api\Data\GroupInterface::NOT_LOGGED_IN_ID);
         }
         return $this;
     }
@@ -117,7 +117,7 @@ class QuoteManagement
      * Save quote
      *
      * @param \Magento\Quote\Api\Data\CartInterface $quote
-     * @param object $splittedQuote
+     * @param object $split
      * @return $this
      */
     protected function _toSaveQuote($quote)
@@ -175,17 +175,17 @@ class QuoteManagement
      * Set payment method.
      *
      * @param object $paymentMethod
-     * @param object $splittedQuote
-     * @param string $paymentString
+     * @param object $split
+     * @param string $payment
      * @return $this
      */
-    protected function _setPaymentMethod($paymentMethod, $splittedQuote, $paymentString)
+    protected function _setPaymentMethod($paymentMethod, $split, $payment)
     {
-        $splittedQuote->getPayment()->setMethod($paymentString);
+        $split->getPayment()->setMethod($payment);
         if ($paymentMethod) {
-            $splittedQuote->getPayment()->setQuote($splittedQuote);
+            $split->getPayment()->setQuote($split);
             $data = $paymentMethod->getData();
-            $splittedQuote->getPayment()->importData($data);
+            $split->getPayment()->importData($data);
         }
         return $this;
     }
@@ -193,15 +193,15 @@ class QuoteManagement
     /**
      * Define checkout sessions.
      *
-     * @param object $splittedQuote
+     * @param object $split
      * @param object $order
      * @param array $orderIds
      * @return $this
      */
-    protected function _defineSessions($splittedQuote, $order, $orderIds)
+    protected function _defineSessions($split, $order, $orderIds)
     {
-        $this->checkoutSession->setLastQuoteId($splittedQuote->getId());
-        $this->checkoutSession->setLastSuccessQuoteId($splittedQuote->getId());
+        $this->checkoutSession->setLastQuoteId($split->getId());
+        $this->checkoutSession->setLastSuccessQuoteId($split->getId());
         $this->checkoutSession->setLastOrderId($order->getId());
         $this->checkoutSession->setLastRealOrderId($order->getIncrementId());
         $this->checkoutSession->setLastOrderStatus($order->getStatus());
@@ -236,41 +236,41 @@ class QuoteManagement
         }
 
         // Get data from addresses.
-        $paymentString   = $quote->getPayment()->getMethod();
-        $billingAddress  = $this->_getBillingAddressData($quote);
-        $shippingAddress = $this->_getShippingAddressData($quote);
+        $pmethod  = $quote->getPayment()->getMethod();
+        $payment  = $this->_getBillingAddressData($quote);
+        $shipping = $this->_getShippingAddressData($quote);
 
         foreach ($quotes as $groups => $items) {
             // Init Quote Split.
-            $splittedQuote = $this->quoteFactory->create();
+            $split = $this->quoteFactory->create();
 
             // Set all customer definition data.
-            $this->_setCustomerData($quote, $splittedQuote);
+            $this->_setCustomerData($quote, $split);
 
             // Save splitted quote in order to have a quote item Id.
-            $this->_toSaveQuote($splittedQuote);
+            $this->_toSaveQuote($split);
 
             // Map quote items.
             foreach ($items as $item) {
                 // Add item by item.
                 $item->setId(null);
-                $splittedQuote->addItem($item);
+                $split->addItem($item);
             }
 
             // Recollect order totals.
-            $this->_recollectTotal($item, $splittedQuote, $billingAddress, $shippingAddress);
+            $this->_recollectTotal($item, $split, $payment, $shipping);
 
             // Set payment method.
-            $this->_setPaymentMethod($paymentMethod, $splittedQuote, $paymentString);
+            $this->_setPaymentMethod($paymentMethod, $split, $pmethod);
 
             // Dispatch event as Magento standard once per each quote split.
             $this->eventManager->dispatch(
                 'checkout_submit_before',
-                ['quote' => $splittedQuote]
+                ['quote' => $split]
             );
 
-            $this->_toSaveQuote($splittedQuote);
-            $order = $subject->submit($splittedQuote);
+            $this->_toSaveQuote($split);
+            $order = $subject->submit($split);
 
             $orders[] = $order;
             $orderIds[$order->getId()] = $order->getIncrementId();
@@ -287,7 +287,7 @@ class QuoteManagement
         $this->_toSaveQuote($quote);
 
         // Define checkout sessions.
-        $this->_defineSessions($splittedQuote, $order, $orderIds);
+        $this->_defineSessions($split, $order, $orderIds);
 
         // Dispatch event.
         $this->eventManager->dispatch(
