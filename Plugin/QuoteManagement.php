@@ -30,7 +30,7 @@ class QuoteManagement
     protected $eventManager;
 
     /**
-     * @var \Magento\Checkout\Model\Session 
+     * @var \Magento\Checkout\Model\Session
      */
     protected $checkoutSession;
 
@@ -112,34 +112,47 @@ class QuoteManagement
         }
         return $this;
     }
+
+    /**
+     * Save quote
+     *
+     * @param \Magento\Quote\Api\Data\CartInterface $quote
+     * @param object $splittedQuote
+     * @return $this
+     */
+    protected function _toSaveQuote($quote)
+    {
+        $this->quoteRepository->save($quote);
+
+        return $this;
+    }
  
     /**
      * Recollect order totals.
      *
      * @param object $item
-     * @param object $splittedQuote
-     * @param object $billingAddress
-     * @param object $shippingAddress
+     * @param object $quote
+     * @param object $billing
+     * @param object $shipping
+     * @param float $shippingAmount
      * @return $this
      */
-    protected function _recollectTotal($item, $splittedQuote, $billingAddress, $shippingAddress)
+    protected function _recollectTotal($item, $quote, $billing, $shipping)
     {
         // Retrieve values.
         $tax        = $item->getData('tax_amount');
-        $total      = $item->getData('row_total');
-        $totalTax   = $item->getData('base_row_total_incl_tax');
         $discount   = $item->getData('discount_amount');
         $itemPrice  = $item->getPrice();
         $itemQty    = $item->getQty();
         $finalPrice = ($itemPrice * $itemQty);
 
         // Set addresses.
-        $splittedQuote->getBillingAddress()->setData($billingAddress);
-        $splittedQuote->getShippingAddress()->setData($shippingAddress);
-        $shippingAmount = $splittedQuote->getShippingAddress()->getShippingAmount();
+        $quote->getBillingAddress()->setData($billing);
+        $quote->getShippingAddress()->setData($shipping);
+        $shippingAmount = $quote->getShippingAddress()->getShippingAmount();
 
         // Recollect totals into the quote.
-        foreach ($splittedQuote->getAllAddresses() as $address) {
+        foreach ($quote->getAllAddresses() as $address) {
             // Build grand total.
             $grandTotal = (($finalPrice + $shippingAmount + $tax) - $discount);
 
@@ -203,8 +216,12 @@ class QuoteManagement
      * @return mixed
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function aroundPlaceOrder(\Magento\Quote\Model\QuoteManagement $subject, callable $proceed, $cartId, $paymentMethod = null)
-    {
+    public function aroundPlaceOrder(
+        \Magento\Quote\Model\QuoteManagement $subject,
+        callable $proceed,
+        $cartId,
+        $paymentMethod = null
+    ) {
         $quote = $this->quoteRepository->getActive($cartId);
 
         // Separate all items in quote into new quotes.
@@ -227,7 +244,7 @@ class QuoteManagement
             $this->_setCustomerData($quote, $splittedQuote);
 
             // Save splitted quote in order to have a quote item Id.
-            $this->quoteRepository->save($splittedQuote);
+            $this->_toSaveQuote($splittedQuote);
 
             // Map quote items.
             foreach ($items as $item) {
@@ -248,7 +265,7 @@ class QuoteManagement
                 ['quote' => $splittedQuote]
             );
 
-            $this->quoteRepository->save($splittedQuote);
+            $this->_toSaveQuote($splittedQuote);
             $order = $subject->submit($splittedQuote);
 
             $orders[] = $order;
@@ -263,13 +280,14 @@ class QuoteManagement
         // Disable origin quote.
         $quote->setIsActive(false);
         // To save quote.
-        $this->quoteRepository->save($quote);
+        $this->_toSaveQuote($quote);
 
         // Define checkout sessions.
         $this->_defineSessions($splittedQuote, $order, $orderIds);
 
         // Dispatch event.
-        $this->eventManager->dispatch('checkout_submit_all_after',
+        $this->eventManager->dispatch(
+            'checkout_submit_all_after',
             ['orders' => $orders, 'quote' => $quote]
         );
         return $order->getId();
