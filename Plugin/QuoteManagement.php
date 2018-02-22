@@ -179,6 +179,7 @@ class QuoteManagement
      * @param object $splittedQuote
      * @param object $order
      * @param array $orderIds
+     * @return $this
      */
     protected function _defineSessions($splittedQuote, $order, $orderIds)
     {
@@ -188,10 +189,19 @@ class QuoteManagement
         $this->checkoutSession->setLastRealOrderId($order->getIncrementId());
         $this->checkoutSession->setLastOrderStatus($order->getStatus());
         $this->checkoutSession->setOrderIds($orderIds);
+
+        return $this;
     }
 
     /**
-     * @var \Magento\Quote\Model\QuoteManagement
+     * * Places an order for a specified cart.
+     *
+     * @param \Magento\Quote\Model\QuoteManagement $subject
+     * @param \Magestat\SplitOrder\Plugin\callable $proceed
+     * @param int $cartId The cart ID.
+     * @param PaymentInterface|null $paymentMethod
+     * @return mixed
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function aroundPlaceOrder(\Magento\Quote\Model\QuoteManagement $subject, callable $proceed, $cartId, $paymentMethod = null)
     {
@@ -264,5 +274,4 @@ class QuoteManagement
         );
         return $order->getId();
     }
-
 }
