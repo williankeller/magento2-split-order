@@ -36,9 +36,6 @@ php bin/magento module:enable Magestat_SplitOrder --clear-static-content
 php bin/magento setup:upgrade
 ```
 
-Go to *Stores* > *Configuration* > *Magestat* > *Split Order*:
-And just Enable module.
-
 Clear the caches:
 ```sh
 php bin/magento cache:clean
