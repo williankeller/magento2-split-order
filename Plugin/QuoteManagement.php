@@ -137,7 +137,7 @@ class QuoteManagement
      * @param float $shippingAmount
      * @return $this
      */
-    protected function _recollectTotal($item, $quote, $billing, $shipping)
+    protected function _recollectTotal($item, $quote, $billing, $shipping, $shippingAmount = 0)
     {
         // Retrieve values.
         $tax        = $item->getData('tax_amount');
@@ -149,7 +149,11 @@ class QuoteManagement
         // Set addresses.
         $quote->getBillingAddress()->setData($billing);
         $quote->getShippingAddress()->setData($shipping);
-        $shippingAmount = $quote->getShippingAddress()->getShippingAmount();
+
+        // Add shipping amount if product is not virual.
+        if ($quote->hasVirtualItems() === false) {
+            $shippingAmount = $quote->getShippingAddress()->getShippingAmount();
+        }
 
         // Recollect totals into the quote.
         foreach ($quote->getAllAddresses() as $address) {
