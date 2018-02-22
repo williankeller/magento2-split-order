@@ -12,15 +12,8 @@
 
 namespace Magestat\SplitOrder\Plugin;
 
-use Magento\Framework\Exception\LocalizedException;
-
 class QuoteManagement
 {
-    /**
-     * @var \Magestat\SplitOrder\Helper\Data
-     */
-    protected $helperData;
-
     /**
      * @var \Magento\Quote\Api\CartRepositoryInterface
      */
@@ -42,20 +35,17 @@ class QuoteManagement
     protected $checkoutSession;
 
     /**
-     * @param \Magestat\SplitOrder\Helper\Data $helperData
      * @param \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
      * @param \Magento\Quote\Model\QuoteFactory $quoteFactory
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
-        \Magestat\SplitOrder\Helper\Data $helperData,
         \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
         \Magento\Quote\Model\QuoteFactory $quoteFactory,
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Checkout\Model\Session $checkoutSession
     ) {
-        $this->helperData      = $helperData;
         $this->quoteRepository = $quoteRepository;
         $this->quoteFactory    = $quoteFactory;
         $this->eventManager    = $eventManager;
@@ -255,7 +245,7 @@ class QuoteManagement
             $orderIds[$order->getId()] = $order->getIncrementId();
 
             if (null == $order) {
-                throw new LocalizedException(
+                throw new \Magento\Framework\Exception\LocalizedException(
                     __('An error occurred on the server. Please try to place the order again.')
                 );
             }
