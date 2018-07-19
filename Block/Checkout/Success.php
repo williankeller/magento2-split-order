@@ -61,7 +61,6 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
         if (count($splittedOrders) <= 1) {
             return false;
         }
-
         // Return prepared block data.
         return $splittedOrders;
     }

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * A Magento 2 module named Magestat/SplitOrder
+ * Copyright (C) 2018 Magestat
+ *
+ * This file included in Magestat/SplitOrder is licensed under OSL 3.0
+ *
+ * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * Please see LICENSE.txt for the full text of the OSL 3.0 license
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="magestat" translate="label" sortOrder="900">
+            <label>Magestat</label>
+        </tab>
+        <section id="magestat_split_order" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <tab>magestat</tab>
+            <label>Split Order</label>
+            <resource>Magestat_SplitOrder::config</resource>
+            <group id="module" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Enable Module</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+

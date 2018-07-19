@@ -11,9 +11,12 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- API Preferences -->
+    <preference for="Magestat\SplitOrder\Api\QuoteHandlerInterface" type="Magestat\SplitOrder\Model\QuoteHandler"/>
+
     <!-- Plugins -->
     <type name="Magento\Quote\Model\QuoteManagement">
-        <plugin name="magestat-splitorder-quote-management" type="Magestat\SplitOrder\Plugin\QuoteManagement" sortOrder="1"/>
+        <plugin name="magestat-splitorder-split-quote" type="Magestat\SplitOrder\Plugin\SplitQuote" sortOrder="1"/>
     </type>
     <type name="Magento\Sales\Api\OrderRepositoryInterface">
         <plugin name="save_order_tax" disabled="true"/>

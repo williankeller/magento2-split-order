@@ -1,5 +1,5 @@
-Split Order for Magento 2
-==================
+#Split Order for Magento 2
+==========================
 
 This extension allows your online store to split the order into an order
 for each item in the cart. With different order ids, customers can view all the 
@@ -8,29 +8,27 @@ The admin generate separate invoices and shipments for each splitted order.
 Shipping charges and tax are also split based on items.
 
 
-Installation
--------------
-**Using Composer**
+## 1. Installation
+
+### Install via composer (recommend)
 
 
-Install all dependencies via [Composer](https://getcomposer.org) (from root of 
-your Magento2 Installation):
+Run the following command in Magento 2 root folder:
 ```sh
 composer config repositories.magestat-module-split-order git git@github.com:magestat/magento2-split-order.git
-composer require magestat/module-split-order:dev-master
+composer require magestat/module-split-order:1.0.1
 ```
 
-**Using GIT Clone**
+### Using GIT clone
 
-Run the following series of command (from root of your Magento2 Installation):
+Run the following command in Magento 2 root folder:
 ```sh
-mkdir -p app/code/Magestat && git clone git@github.com:magestat/magento2-split-order.git app/code/Magestat/SplitOrder
+git clone git@github.com:magestat/magento2-split-order.git app/code/Magestat/SplitOrder
 ```
 
-**Enabling module**
+## 2. Activation
 
-After installation by either means, enable the extension by running following 
-commands (again from root of Magento2 installation):
+Run the following command in Magento 2 root folder:
 ```sh
 php bin/magento module:enable Magestat_SplitOrder --clear-static-content
 php bin/magento setup:upgrade
@@ -41,14 +39,20 @@ Clear the caches:
 php bin/magento cache:clean
 ```
 
-Let us know if you have any suggestions for changing the price for the text,
-contact@magestat.com or open an issue under this repository.
+## 3. Configuration
+
+1. Go to **Stores** > **Configuration** > **Magestat** > **Split Order**.
+2. Select **Enabled** option to enable module.
+
+## Contribution
+
+Want to contribute to this extension? The quickest way is to open a [pull request on GitHub](https://help.github.com/articles/using-pull-requests).
 
 
-Uninstall
--------------
+## Support
 
-You need to remove the module.
-```sh
-composer remove magestat/module-split-order
-```
+If you encounter any problems or bugs, please open an issue on [GitHub](https://github.com/magestat/magento2-split-order/issues).
+
+Need help setting up or want to customize this extension to meet your business needs? Please email support@magestat.com and if we like your idea we will add this feature for free or at a discounted rate.
+
+© Magestat. | [www.magestat.com](http:/www.magestat.com)
