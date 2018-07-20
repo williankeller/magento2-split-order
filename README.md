@@ -1,5 +1,4 @@
-#Split Order for Magento 2
-==========================
+# Split Order for Magento 2
 
 This extension allows your online store to split the order into an order
 for each item in the cart. With different order ids, customers can view all the 
