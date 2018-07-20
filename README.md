@@ -1,5 +1,7 @@
 # Split Order for Magento 2
 
+(https://img.shields.io/packagist/v/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order) [![Packagist]
+
 This extension allows your online store to split the order into an order
 for each item in the cart. With different order ids, customers can view all the 
 order ids in their Order History and track each item separately. 
