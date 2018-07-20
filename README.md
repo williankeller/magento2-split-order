@@ -14,8 +14,7 @@ Shipping charges and tax are also split based on items.
 
 Run the following command in Magento 2 root folder:
 ```sh
-composer config repositories.magestat-module-split-order git git@github.com:magestat/magento2-split-order.git
-composer require magestat/module-split-order:1.0.1
+composer require magestat/module-split-order
 ```
 
 ### Using GIT clone
