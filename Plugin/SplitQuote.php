@@ -65,21 +65,18 @@ class SplitQuote
      * @param QuoteManagement $subject
      * @param callable $proceed
      * @param int $cartId
-     * @param string $paymentMethod
+     * @param string $payment
      * @return mixed
      * @throws LocalizedException
      */
-    public function aroundPlaceOrder(QuoteManagement $subject, callable $proceed, $cartId, $paymentMethod = null)
+    public function aroundPlaceOrder(QuoteManagement $subject, callable $proceed, $cartId, $payment = null)
     {
         $quote = $this->quoteRepository->getActive($cartId);
 
         // Separate all items in quote into new quotes.
-        $quotes = $this->quoteHandler->normalizeQuotes($quote);
-
-        if (!$this->quoteHandler->isSplittable($quotes)) {
-            return $result = $proceed($cartId, $paymentMethod);
+        if (($quotes = $this->quoteHandler->normalizeQuotes($quote)) === false) {
+            return $result = $proceed($cartId, $payment);
         }
-
         // Collect list of data addresses.
         $addresses = $this->quoteHandler->collectAddressesData($quote);
 
@@ -99,9 +96,8 @@ class SplitQuote
                 $item->setId(null);
                 $split->addItem($item);
             }
-
             // Recollect order totals.
-            $this->quoteHandler->populateQuote($split, $item, $addresses, $paymentMethod);
+            $this->quoteHandler->populateQuote($quotes, $split, $item, $addresses, $payment);
 
             // Dispatch event as Magento standard once per each quote split.
             $this->eventManager->dispatch(

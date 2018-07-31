@@ -23,12 +23,11 @@ interface QuoteHandlerInterface
     public function normalizeQuotes($quote);
 
     /**
-     * Check if quotes should be split.
-     *
-     * @param object $quotes
-     * @return bool
+     * @param object $product
+     * @param string $attributes
+     * @return string
      */
-    public function isSplittable($quotes);
+    public function getProductAttributes($product, $attributes);
 
     /**
      * Collect list of data addresses.
@@ -48,25 +47,33 @@ interface QuoteHandlerInterface
     /**
      * Populate quotes with new data.
      *
+     * @param object $quotes
      * @param object $split
      * @param object $item
      * @param array $addresses
-     * @param string $paymentMethod
+     * @param string $payment
      * @return $this
      */
-    public function populateQuote($split, $item, $addresses, $paymentMethod);
+    public function populateQuote($quotes, $split, $item, $addresses, $payment);
 
     /**
      * Recollect order totals.
      *
+     * @param object $quotes
      * @param object $item
      * @param object $quote
      * @param array $addresses
-     * @param float $shippingAmount
      * @return $this
      */
-    public function recollectTotal($item, $quote, $addresses, $shippingAmount = 0);
+    public function recollectTotal($quotes, $item, $quote, $addresses);
  
+    /**
+     * @param object $quotes
+     * @param object $quote
+     * @param float $total
+     */
+    public function shippingAmount($quotes, $quote, $total = 0);
+    
     /**
      * Set payment method.
      *

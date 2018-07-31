@@ -15,7 +15,7 @@
         <tab id="magestat" translate="label" sortOrder="900">
             <label>Magestat</label>
         </tab>
-        <section id="magestat_split_order" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="magestat_split_order" showInDefault="1">
             <tab>magestat</tab>
             <label>Split Order</label>
             <resource>Magestat_SplitOrder::config</resource>
@@ -26,7 +26,19 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
+            <group id="options" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+                <label>Settings</label>
+                <field id="attributes" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Attribute to Split</label>
+                    <source_model>Magestat\SplitOrder\Model\Config\Source\Attributes</source_model>
+                    <comment>Select an attribute to be compared, will be split products with different attribute values.</comment>
+                </field>
+                <field id="shipping" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Split Shipping Total</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Split shipping total between orders, otherwise, place shipping total to one order only.</comment>
+                </field>
+            </group>
         </section>
     </system>
 </config>
-

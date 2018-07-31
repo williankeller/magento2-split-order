@@ -12,6 +12,8 @@
 
 namespace Magestat\SplitOrder\Helper;
 
+use Magento\Store\Model\ScopeInterface;
+
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
@@ -29,6 +31,34 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     * Get attributes to split.
+     *
+     * @param null $storeId
+     * @return array
+     */
+    public function getAttributes($storeId = null)
+    {
+        return $this->getConfig(
+            'magestat_split_order/options/attributes',
+            $storeId
+        );
+    }
+
+    /**
+     * Check if should split delivery.
+     *
+     * @param null $storeId
+     * @return bool
+     */
+    public function getShippingSplit($storeId = null)
+    {
+        return (bool) $this->getConfig(
+            'magestat_split_order/options/shipping',
+            $storeId
+        );
+    }
+
+    /**
      * Return store configuration value.
      *
      * @param string $path
@@ -39,7 +69,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->scopeConfig->getValue(
             $path,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $storeId
         );
     }
