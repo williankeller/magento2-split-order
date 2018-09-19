@@ -43,6 +43,7 @@ php bin/magento cache:clean
 
 1. Go to **Stores** > **Configuration** > **Magestat** > **Split Order**.
 2. Select **Enabled** option to enable module.
+3. Change the options selecting the attribute to split the order just like you want.
 
 ## Contribution
 
