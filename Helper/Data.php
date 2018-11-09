@@ -24,8 +24,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function isActive($storeId = null)
     {
-        return (bool) $this->getConfig(
+        return (bool) $this->scopeConfig->isSetFlag(
             'magestat_split_order/module/enabled',
+            ScopeInterface::SCOPE_STORE,
             $storeId
         );
     }
@@ -38,8 +39,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getAttributes($storeId = null)
     {
-        return $this->getConfig(
+        return $this->scopeConfig->getValue(
             'magestat_split_order/options/attributes',
+            ScopeInterface::SCOPE_STORE,
             $storeId
         );
     }
@@ -52,23 +54,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getShippingSplit($storeId = null)
     {
-        return (bool) $this->getConfig(
-            'magestat_split_order/options/shipping',
-            $storeId
-        );
-    }
-
-    /**
-     * Return store configuration value.
-     *
-     * @param string $path
-     * @param int $storeId
-     * @return mixed
-     */
-    public function getConfig($path, $storeId = null)
-    {
         return $this->scopeConfig->getValue(
-            $path,
+            'magestat_split_order/options/shipping',
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
