@@ -39,7 +39,7 @@ class QuoteHandler implements QuoteHandlerInterface
         HelperData $helperData
     ) {
         $this->checkoutSession = $checkoutSession;
-        $this->helperData      = $helperData;
+        $this->helperData = $helperData;
     }
 
     /**
