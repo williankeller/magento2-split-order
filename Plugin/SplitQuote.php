@@ -75,7 +75,7 @@ class SplitQuote
 
         // Separate all items in quote into new quotes.
         if (($quotes = $this->quoteHandler->normalizeQuotes($quote)) === false) {
-            return $result = $proceed($cartId, $payment);
+            return $result = array_values([($proceed($cartId, $payment))]);
         }
         // Collect list of data addresses.
         $addresses = $this->quoteHandler->collectAddressesData($quote);
@@ -130,7 +130,11 @@ class SplitQuote
             'checkout_submit_all_after',
             ['orders' => $orders, 'quote' => $quote]
         );
-        return $order->getId();
+        $order_ids = array();
+        foreach(array_keys($orderIds) as $orderKey) {
+            $order_ids[] = (string)$orderKey;
+        };
+        return array_values($order_ids);
     }
 
     /**
