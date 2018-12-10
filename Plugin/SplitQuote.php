@@ -130,11 +130,11 @@ class SplitQuote
             'checkout_submit_all_after',
             ['orders' => $orders, 'quote' => $quote]
         );
-        $order_ids = array();
+        $orderValues = [];
         foreach(array_keys($orderIds) as $orderKey) {
-            $order_ids[] = (string)$orderKey;
+            $orderValues[] = (string) $orderKey;
         };
-        return array_values($order_ids);
+        return array_values($orderValues);
     }
 
     /**
