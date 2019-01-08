@@ -53,7 +53,11 @@ Want to contribute to this extension? The quickest way is to open a [pull reques
 ## Support
 
 If you encounter any problems or bugs, please open an issue on [GitHub](https://github.com/magestat/magento2-split-order/issues).
+Need help setting up or want to customize this extension to meet your business needs? Please email willianlkeller@outlook.com and if we like your idea we will add this feature for free or at a discounted rate.
 
-Need help setting up or want to customize this extension to meet your business needs? Please email support@magestat.com and if we like your idea we will add this feature for free or at a discounted rate.
+## Known issues
 
-© Magestat. | [www.magestat.com](http:/www.magestat.com)
+1. [Doesn't work with Braintree, Paypal via Braintree, Paypal Express Checkout](https://github.com/magestat/magento2-split-order/issues/10)
+
+
+© Magestat.
