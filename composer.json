@@ -3,6 +3,7 @@
     "description": "This extension allows your online store to split the order into an order for each item in the cart.",
     "keywords": [
         "magento 2",
+        "magento extension",
         "split order",
         "magento quote",
         "split quote",
@@ -13,7 +14,7 @@
     "license": [
         "OSL-3.0"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "authors": [
         {
             "name": "Willian Keller",
@@ -26,8 +27,8 @@
     },
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0",
-        "magento/module-backend": "100.0.*|100.1.*|100.2.*",
-        "magento/framework": "100.0.*|100.1.*|101.0.*"
+        "magento/module-backend": "100.1.*|100.2.*|100.3.*",
+        "magento/framework": "100.1.*|100.2.*|100.3.*|101.0.*"
     },
     "autoload": {
         "files": [
