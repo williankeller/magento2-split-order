@@ -1,28 +1,45 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [1.0.2] - 2018-08-21
-### Added
+### [1.0.3](https://github.com/magestat/magento2-split-order/releases/tag/1.0.3) - 2019-01-31
+#### Added
+- Add Travis to validate code standard.
+
+#### Fixed
+- Change Session to be loaded by Proxy.
+- [#11](https://github.com/magestat/magento2-split-order/issues/11) Only single OrderID returned in `V1/guest-carts/:cartID/order` or `V1/carts/:cartID/order` PUT endpoints
+
+#### Changed
+- Improved module architecture & code structure.
+
+
+### [1.0.2](https://github.com/magestat/magento2-split-order/releases/tag/1.0.2) - 2018-08-21
+#### Added
 - Option to select a product attribute to define order split.
 - Capability to split shipping totals into all orders or only one.
 
-### Fixed
+#### Fixed
 - Split shipping totals into all orders or only one.
 - Set shipping to one order only.
 
-### Changed
+#### Changed
 - Improved module architecture.
 - Stable order submission.
 
 
-## [1.0.1] - 2018-07-20
-### Added
+### [1.0.1](https://github.com/magestat/magento2-split-order/releases/tag/1.0.1) - 2018-07-20
+#### Added
 - CMS module settings (Enable/Disable)
 
-### Fixed
+#### Fixed
 - Compatibility with 2.1.* EE.
 
-### Changed
+#### Changed
 - Improved module architecture.
 - Stable order submission.
 - Expose methods to be intercepted.
+
+
+### [1.0.0](https://github.com/magestat/magento2-split-order/releases/tag/1.0.0) - 2018-02-15
+#### Added
+- Release module.
