@@ -19,27 +19,30 @@ use Magento\Quote\Model\QuoteFactory;
 use Magento\Framework\Event\ManagerInterface;
 use Magestat\SplitOrder\Api\QuoteHandlerInterface;
 
+/**
+ * @package Magestat\SplitOrder\Plugin
+ */
 class SplitQuote
 {
     /**
      * @var \Magento\Quote\Api\CartRepositoryInterface
      */
-    protected $quoteRepository;
+    private $quoteRepository;
 
     /**
      * @var \Magento\Quote\Model\QuoteFactory
      */
-    protected $quoteFactory;
+    private $quoteFactory;
 
     /**
      * @var \Magento\Framework\Event\ManagerInterface
      */
-    protected $eventManager;
+    private $eventManager;
 
     /**
      * @var \Magestat\SplitOrder\Api\QuoteHandlerInterface
      */
-    protected $quoteHandler;
+    private $quoteHandler;
 
     /**
      * @param CartRepositoryInterface $quoteRepository
@@ -54,20 +57,21 @@ class SplitQuote
         QuoteHandlerInterface $quoteHandler
     ) {
         $this->quoteRepository = $quoteRepository;
-        $this->quoteFactory    = $quoteFactory;
-        $this->eventManager    = $eventManager;
+        $this->quoteFactory = $quoteFactory;
+        $this->eventManager = $eventManager;
         $this->quoteHandler = $quoteHandler;
     }
 
     /**
      * Places an order for a specified cart.
-     * 
+     *
      * @param QuoteManagement $subject
      * @param callable $proceed
      * @param int $cartId
      * @param string $payment
      * @return mixed
      * @throws LocalizedException
+     * @see \Magento\Quote\Api\CartManagementInterface
      */
     public function aroundPlaceOrder(QuoteManagement $subject, callable $proceed, $cartId, $payment = null)
     {
@@ -112,9 +116,7 @@ class SplitQuote
             $orderIds[$order->getId()] = $order->getIncrementId();
 
             if (null == $order) {
-                throw new LocalizedException(
-                    __('An error occurred on the server. Please try to place the order again.')
-                );
+                throw new LocalizedException('Please try to place the order again.');
             }
         }
         // Disable origin quote.
@@ -130,23 +132,33 @@ class SplitQuote
             'checkout_submit_all_after',
             ['orders' => $orders, 'quote' => $quote]
         );
-        $orderValues = [];
-        foreach(array_keys($orderIds) as $orderKey) {
-            $orderValues[] = (string) $orderKey;
-        };
-        return array_values($orderValues);
+
+        return $this->getOrderKeys($orderIds);
     }
 
     /**
      * Save quote
      *
      * @param \Magento\Quote\Api\Data\CartInterface $quote
-     * @return $this
+     * @return \Magestat\SplitOrder\Plugin\SplitQuote $this
      */
-    protected function toSaveQuote($quote)
+    private function toSaveQuote($quote)
     {
         $this->quoteRepository->save($quote);
 
         return $this;
+    }
+
+    /**
+     * @param array $orderIds
+     * @return array
+     */
+    private function getOrderKeys($orderIds)
+    {
+        $orderValues = [];
+        foreach (array_keys($orderIds) as $orderKey) {
+            $orderValues[] = (string) $orderKey;
+        }
+        return array_values($orderValues);
     }
 }
