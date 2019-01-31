@@ -15,17 +15,20 @@ namespace Magestat\SplitOrder\Model\Config\Source;
 use Magento\Framework\Option\ArrayInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 
+/**
+ * @package Magestat\SplitOrder\Model\Config\Source
+ */
 class Attributes implements ArrayInterface
 {
     /**
-     * @var array
-     */
-    protected $options;
-
-    /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory
      */
-    protected $collection;
+    private $collection;
+
+    /**
+     * @var array Options list
+     */
+    private $options;
 
     /**
      * @param CollectionFactory $collectionFactory
@@ -54,7 +57,6 @@ class Attributes implements ArrayInterface
             }
             $this->options = $attributes;
         }
-
         $options = $this->options;
         if (!$isMultiselect) {
             array_unshift($options, ['value' => '', 'label' => __('--Please Select--')]);
