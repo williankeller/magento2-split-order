@@ -12,40 +12,43 @@
 
 namespace Magestat\SplitOrder\Block\Checkout;
 
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Checkout\Model\Session;
+use Magento\Sales\Model\Order\Config;
+use Magento\Framework\App\Http\Context as HttpContext;
+
+/**
+ * @package Magestat\SplitOrder\Block\Checkout
+ */
 class Success extends \Magento\Checkout\Block\Onepage\Success
 {
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected $_checkoutSession;
+    private $checkoutSession;
 
     /**
-     * @var \Magento\Sales\Model\Order\Config
-     */
-    protected $_orderConfig;
-
-    /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Checkout\Model\Session $checkoutSession
-     * @param \Magento\Sales\Model\Order\Config $orderConfig
-     * @param \Magento\Framework\App\Http\Context $httpContext
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param Context $context
+     * @param Session $checkoutSession
+     * @param Config $orderConfig
+     * @param HttpContext $httpContext
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Sales\Model\Order\Config $orderConfig,
-        \Magento\Framework\App\Http\Context $httpContext,
-        \Magento\Sales\Model\OrderFactory $orderFactory,
+        Context $context,
+        Session $checkoutSession,
+        Config $orderConfig,
+        HttpContext $httpContext,
         array $data = []
     ) {
-        $this->_checkoutSession = $checkoutSession;
-        $this->_orderConfig     = $orderConfig;
-        $this->_isScopePrivate  = true;
-        $this->httpContext      = $httpContext;
-        $this->_orderFactory    = $orderFactory;
-        parent::__construct($context, $checkoutSession, $orderConfig, $httpContext, $data);
+        parent::__construct(
+            $context,
+            $checkoutSession,
+            $orderConfig,
+            $httpContext,
+            $data
+        );
+        $this->checkoutSession = $checkoutSession;
     }
 
     /**
@@ -53,9 +56,9 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
      */
     public function getOrderArray()
     {
-        $splittedOrders = $this->_checkoutSession->getOrderIds();
+        $splittedOrders = $this->checkoutSession->getOrderIds();
         // Remove session.
-        $this->_checkoutSession->unsOrderIds();
+        $this->checkoutSession->unsOrderIds();
 
         // If number of orders is just like one, kill function.
         if (count($splittedOrders) <= 1) {
