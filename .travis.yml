@@ -1,0 +1,14 @@
+dist: trusty
+
+language: php
+
+php:
+  - 7.1
+
+before_install:
+  - composer config -g http-basic.repo.magento.com $MAGE_PUBLICKEY $MAGE_PRIVATEKEY
+  - composer create-project --repository=https://repo.magento.com magento/marketplace-eqp magento-coding-standard
+  - composer install
+
+script:
+  - magento-coding-standard/vendor/bin/phpcs --ignore=./vendor/*,./magento-coding-standard/*,./Test/* --standard=MEQP2 --extensions=php,phtml,js .
