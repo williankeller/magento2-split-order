@@ -7,7 +7,7 @@ order ids in their Order History and track each item separately.
 The admin generate separate invoices and shipments for each splitted order. 
 Shipping charges and tax are also split based on items.
 
-[![Build Status](https://travis-ci.org/magestat/magento2-split-order.svg?branch=v1.0.2)](https://travis-ci.org/magestat/magento2-split-order) [![Packagist](https://img.shields.io/packagist/v/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order)
+[![Build Status](https://travis-ci.org/magestat/magento2-split-order.svg?branch=develop)](https://travis-ci.org/magestat/magento2-split-order) [![Packagist](https://img.shields.io/packagist/v/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order)
 
 ## 1. Installation
 
