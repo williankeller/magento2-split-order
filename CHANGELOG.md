@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+### [1.0.4](https://github.com/magestat/magento2-split-order/releases/tag/1.0.4) - 2019-02-06
+#### Added
+- Compatibility with PHP 7.2
+
+
 ### [1.0.3](https://github.com/magestat/magento2-split-order/releases/tag/1.0.3) - 2019-01-31
 #### Added
 - Add Travis to validate code standard.
