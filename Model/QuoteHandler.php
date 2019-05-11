@@ -131,9 +131,9 @@ class QuoteHandler implements QuoteHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function populateQuote($quotes, $split, $item, $addresses, $payment)
+    public function populateQuote($quotes, $split, $items, $addresses, $payment)
     {
-        $this->recollectTotal($quotes, $item, $split, $addresses);
+        $this->recollectTotal($quotes, $items, $split, $addresses);
         // Set payment method.
         $this->setPaymentMethod($split, $addresses['payment'], $payment);
 
@@ -183,7 +183,7 @@ class QuoteHandler implements QuoteHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function shippingAmount($quotes, $quote, $total = 0)
+    public function shippingAmount($quotes, $quote, $total = 0.0)
     {
         // Add shipping amount if product is not virual.
         if ($quote->hasVirtualItems() === true) {

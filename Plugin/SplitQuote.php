@@ -140,7 +140,7 @@ class SplitQuote
      * Save quote
      *
      * @param \Magento\Quote\Api\Data\CartInterface $quote
-     * @return \Magestat\SplitOrder\Plugin\SplitQuote $this
+     * @return \Magestat\SplitOrder\Plugin\SplitQuote
      */
     private function toSaveQuote($quote)
     {

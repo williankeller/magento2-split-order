@@ -19,7 +19,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if module is active.
      *
-     * @param null $storeId
+     * @param int $storeId
      * @return bool
      */
     public function isActive($storeId = null)
@@ -34,8 +34,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Get attributes to split.
      *
-     * @param null $storeId
-     * @return array
+     * @param int $storeId
+     * @return string
      */
     public function getAttributes($storeId = null)
     {
@@ -49,12 +49,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Check if should split delivery.
      *
-     * @param null $storeId
+     * @param string $storeId
      * @return bool
      */
     public function getShippingSplit($storeId = null)
     {
-        return $this->scopeConfig->getValue(
+        return (bool) $this->scopeConfig->getValue(
             'magestat_split_order/options/shipping',
             ScopeInterface::SCOPE_STORE,
             $storeId
