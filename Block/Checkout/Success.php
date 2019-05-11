@@ -52,7 +52,7 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
     }
 
     /**
-     * @return boolean|array
+     * @return bool|array
      */
     public function getOrderArray()
     {

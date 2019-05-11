@@ -42,6 +42,7 @@ class Attributes implements ArrayInterface
     /**
      * Get options as array
      *
+     * @param bool $isMultiselect
      * @return array
      */
     public function toOptionArray($isMultiselect = false)
