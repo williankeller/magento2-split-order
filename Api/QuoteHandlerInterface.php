@@ -50,7 +50,7 @@ interface QuoteHandlerInterface
     /**
      * Populate quotes with new data.
      *
-     * @param object $quotes
+     * @param array $quotes
      * @param object $split
      * @param object $item
      * @param array $addresses
@@ -63,12 +63,12 @@ interface QuoteHandlerInterface
      * Recollect order totals.
      *
      * @param object $quotes
-     * @param object $item
+     * @param \Magento\Quote\Model\Quote\Item[] $items
      * @param object $quote
      * @param array $addresses
      * @return $this
      */
-    public function recollectTotal($quotes, $item, $quote, $addresses);
+    public function recollectTotal($quotes, $items, $quote, $addresses);
  
     /**
      * @param object $quotes

@@ -101,7 +101,7 @@ class SplitQuote
                 $split->addItem($item);
             }
             // Recollect order totals.
-            $this->quoteHandler->populateQuote($quotes, $split, $item, $addresses, $payment);
+            $this->quoteHandler->populateQuote($quotes, $split, $items, $addresses, $payment);
 
             // Dispatch event as Magento standard once per each quote split.
             $this->eventManager->dispatch(

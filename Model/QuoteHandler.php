@@ -143,13 +143,19 @@ class QuoteHandler implements QuoteHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function recollectTotal($quotes, $item, $quote, $addresses)
+    public function recollectTotal($quotes, $items, $quote, $addresses)
     {
-        // Retrieve values.
-        $tax = $item->getData('tax_amount');
-        $discount = $item->getData('discount_amount');
+        $tax = 0.0;
+        $discount = 0.0;
+        $finalPrice = 0.0;
 
-        $finalPrice = ($item->getPrice() * $item->getQty());
+        foreach ($items as $item) {
+            // Retrieve values.
+            $tax += $item->getData('tax_amount');
+            $discount += $item->getData('discount_amount');
+
+            $finalPrice += ($item->getPrice() * $item->getQty());
+        }
 
         // Set addresses.
         $quote->getBillingAddress()->setData($addresses['billing']);
