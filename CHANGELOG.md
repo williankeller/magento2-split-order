@@ -1,9 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+### [1.0.5](https://github.com/magestat/magento2-split-order/releases/tag/1.0.5) - 2019-05-11
+#### Fixed
+- Improved and fixed PHPDocs methods.
+- Fixed If multiple products in cart from same vendor giving wrong totals.
+
 ### [1.0.4](https://github.com/magestat/magento2-split-order/releases/tag/1.0.4) - 2019-02-06
 #### Added
-- Compatibility with PHP 7.2
+- Compatibility with PHP 7.2.
 
 
 ### [1.0.3](https://github.com/magestat/magento2-split-order/releases/tag/1.0.3) - 2019-01-31
