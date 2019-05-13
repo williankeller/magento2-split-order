@@ -14,15 +14,8 @@
     "license": [
         "OSL-3.0"
     ],
-    "version": "1.0.4",
-    "authors": [
-        {
-            "name": "Willian Keller",
-            "email": "willianlkeller@outlook.com"
-        }
-    ],
+    "version": "1.0.5",
     "support": {
-        "email": "willianlkeller@outlook.com",
         "issues": "https://github.com/magestat/magento2-split-order/issues/"
     },
     "require": {
