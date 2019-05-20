@@ -27,6 +27,8 @@ git clone git@github.com:magestat/magento2-split-order.git app/code/Magestat/Spl
 Run the following command in Magento 2 root folder:
 ```sh
 php bin/magento module:enable Magestat_SplitOrder --clear-static-content
+```
+```sh
 php bin/magento setup:upgrade
 ```
 
