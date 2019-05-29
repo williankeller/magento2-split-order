@@ -46,7 +46,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function normalizeQuotes($quote)
     {
@@ -78,7 +78,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getProductAttributes($product, $attributes)
     {
@@ -91,7 +91,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function collectAddressesData($quote)
     {
@@ -111,7 +111,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setCustomerData($quote, $split)
     {
@@ -129,7 +129,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function populateQuote($quotes, $split, $items, $addresses, $payment)
     {
@@ -141,7 +141,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function recollectTotal($quotes, $items, $quote, $addresses)
     {
@@ -181,7 +181,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function shippingAmount($quotes, $quote, $total = 0.0)
     {
@@ -213,7 +213,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function setPaymentMethod($split, $payment, $paymentMethod)
     {
@@ -228,7 +228,7 @@ class QuoteHandler implements QuoteHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function defineSessions($split, $order, $orderIds)
     {
