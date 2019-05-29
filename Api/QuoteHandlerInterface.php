@@ -27,10 +27,10 @@ interface QuoteHandlerInterface
 
     /**
      * @param \Magento\Catalog\Model\Product $product
-     * @param string $attributes
-     * @return mixed
+     * @param string $attributeCode
+     * @return string
      */
-    public function getProductAttributes($product, $attributes);
+    public function getProductAttributes($product, $attributeCode);
 
     /**
      * Collect list of data addresses.
