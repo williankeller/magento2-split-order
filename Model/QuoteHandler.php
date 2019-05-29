@@ -50,7 +50,6 @@ class QuoteHandler implements QuoteHandlerInterface
      */
     public function normalizeQuotes($quote)
     {
-        // if module is active.
         if (!$this->helperData->isActive()) {
             return false;
         }
@@ -65,7 +64,6 @@ class QuoteHandler implements QuoteHandlerInterface
 
             $attribute = $this->getProductAttributes($product, $attributes);
             if (empty($attribute)) {
-                // Kill function if attribute is null.
                 return false;
             }
             $groups[$attribute][] = $item;
@@ -80,14 +78,15 @@ class QuoteHandler implements QuoteHandlerInterface
     /**
      * @inheritdoc
      */
-    public function getProductAttributes($product, $attributes)
+    public function getProductAttributes($product, $attributeCode)
     {
-        $attribute = $product->getResource()
-            ->getAttribute($attributes)
-            ->getFrontend()
-            ->getValue($product);
+        $attributeObject = $product->getResource()->getAttribute($attributeCode);
 
-        return $attribute;
+        $attributeValue = $attributeObject->getFrontend()->getValue($product);
+        if ($attributeValue instanceof \Magento\Framework\Phrase) {
+            return $attributeValue->__toString();
+        }
+        return $attributeValue;
     }
 
     /**
