@@ -1,6 +1,19 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+### [1.0.6](https://github.com/magestat/magento2-split-order/releases/tag/1.0.6) - 2019-05-31
+#### Added
+- Split Order Based on the Product Stock Status.
+- Possibility to select Quantity attribute returnable value.
+
+#### Changed
+- Improved list of available attributes by removing unused ones.
+
+#### Fixed
+- Illegal offset type - QuoteHandler
+- Warning: count(): Parameter must be an array or an object that implements Countable
+
+
 ### [1.0.5](https://github.com/magestat/magento2-split-order/releases/tag/1.0.5) - 2019-05-11
 #### Fixed
 - Improved and fixed PHPDocs methods.
