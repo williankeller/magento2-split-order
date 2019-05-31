@@ -54,8 +54,38 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getShippingSplit($storeId = null)
     {
-        return (bool) $this->scopeConfig->getValue(
+        return (bool) $this->scopeConfig->isSetFlag(
             'magestat_split_order/options/shipping',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * Get which kind of attribute related with qty should be load.
+     *
+     * @param int $storeId
+     * @return bool
+     */
+    public function getQtyType($storeId = null)
+    {
+        return $this->scopeConfig->getValue(
+            'magestat_split_order/options/attribute_qty',
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+
+    /**
+     * If should apply out of stock if inventory is empty.
+     *
+     * @param int $storeId
+     * @return string
+     */
+    public function getBackorder($storeId = null)
+    {
+        return (bool) $this->scopeConfig->isSetFlag(
+            'magestat_split_order/options/qty_backorder',
             ScopeInterface::SCOPE_STORE,
             $storeId
         );

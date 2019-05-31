@@ -17,6 +17,7 @@ use Magento\Quote\Api\CartManagementInterface;
 use Magento\Customer\Api\Data\GroupInterface;
 use Magestat\SplitOrder\Api\QuoteHandlerInterface;
 use Magestat\SplitOrder\Helper\Data as HelperData;
+use Magestat\SplitOrder\Api\ExtensionAttributesInterface;
 
 /**
  * @package Magestat\SplitOrder\Model
@@ -34,15 +35,24 @@ class QuoteHandler implements QuoteHandlerInterface
     private $helperData;
 
     /**
+     * @var \Magestat\SplitOrder\Api\ExtensionAttributesInterface
+     */
+    private $extensionAttributes;
+
+    /**
+     * QuoteHandler constructor.
      * @param CheckoutSession $checkoutSession
      * @param HelperData $helperData
+     * @param ExtensionAttributesInterface $extensionAttributes
      */
     public function __construct(
         CheckoutSession $checkoutSession,
-        HelperData $helperData
+        HelperData $helperData,
+        ExtensionAttributesInterface $extensionAttributes
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->helperData = $helperData;
+        $this->extensionAttributes = $extensionAttributes;
     }
 
     /**
@@ -57,18 +67,20 @@ class QuoteHandler implements QuoteHandlerInterface
         if (empty($attributes)) {
             return false;
         }
-
         $groups = [];
+
+        /** @var \Magento\Quote\Model\Quote\Item $item */
         foreach ($quote->getAllVisibleItems() as $item) {
+            /** @var \Magento\Catalog\Model\Product $product */
             $product = $item->getProduct();
 
             $attribute = $this->getProductAttributes($product, $attributes);
-            if (empty($attribute)) {
+            if ($attribute === false) {
                 return false;
             }
             $groups[$attribute][] = $item;
         }
-        // If order have more than one item.
+        // If order have more than one different attribute values.
         if (count($groups) > 1) {
             return $groups;
         }
@@ -80,6 +92,10 @@ class QuoteHandler implements QuoteHandlerInterface
      */
     public function getProductAttributes($product, $attributeCode)
     {
+        $extensionAttribute = $this->extensionAttributes->loadValue($product, $attributeCode);
+        if ($extensionAttribute !== false) {
+            return $extensionAttribute;
+        }
         $attributeObject = $product->getResource()->getAttribute($attributeCode);
 
         $attributeValue = $attributeObject->getFrontend()->getValue($product);
@@ -160,7 +176,7 @@ class QuoteHandler implements QuoteHandlerInterface
         $quote->getBillingAddress()->setData($addresses['billing']);
         $quote->getShippingAddress()->setData($addresses['shipping']);
 
-        // Add shipping amount if product is not virual.
+        // Add shipping amount if product is not virtual.
         $shipping = $this->shippingAmount($quotes, $quote);
 
         // Recollect totals into the quote.
@@ -184,7 +200,7 @@ class QuoteHandler implements QuoteHandlerInterface
      */
     public function shippingAmount($quotes, $quote, $total = 0.0)
     {
-        // Add shipping amount if product is not virual.
+        // Add shipping amount if product is not virtual.
         if ($quote->hasVirtualItems() === true) {
             return $total;
         }
@@ -204,7 +220,7 @@ class QuoteHandler implements QuoteHandlerInterface
             return $shippingTotals;
         }
         if ($shippingTotals > 0) {
-            // Divide shippinto to each order.
+            // Divide shipping to each order.
             $total = (float) ($shippingTotals / count($quotes));
             $quote->getShippingAddress()->setShippingAmount($total);
         }

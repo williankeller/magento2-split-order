@@ -33,7 +33,23 @@
                     <source_model>Magestat\SplitOrder\Model\Config\Source\Attributes</source_model>
                     <comment>Select an attribute to be compared, will be split products with different attribute values.</comment>
                 </field>
-                <field id="shipping" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="attribute_qty" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Type of Stock Attribute</label>
+                    <source_model>Magestat\SplitOrder\Model\Config\Source\AttributeQty</source_model>
+                    <comment>You can select which type of value should be returned.</comment>
+                    <depends>
+                        <field id="attributes">quantity_and_stock_status</field>
+                    </depends>
+                </field>
+                <field id="qty_backorder" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Backorder option</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set product Out of Stock when Backorder is enabled and inventory number is less than zero.</comment>
+                    <depends>
+                        <field id="attribute_qty">status</field>
+                    </depends>
+                </field>
+                <field id="shipping" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Split Shipping Total</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Split shipping total between orders, otherwise, place shipping total to one order only.</comment>

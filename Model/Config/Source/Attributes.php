@@ -12,14 +12,37 @@
 
 namespace Magestat\SplitOrder\Model\Config\Source;
 
-use Magento\Framework\Option\ArrayInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 
 /**
  * @package Magestat\SplitOrder\Model\Config\Source
  */
-class Attributes implements ArrayInterface
+class Attributes implements OptionSourceInterface
 {
+    /**
+     * @var array List of attributes that shouldn't appear on the list.
+     */
+    const BLACK_LIST = [
+        'custom_design',
+        'custom_design_from',
+        'custom_design_to',
+        'custom_layout_update',
+        'page_layout',
+        'gallery',
+        'image',
+        'image_label',
+        'small_image',
+        'small_image_label',
+        'thumbnail',
+        'thumbnail_label',
+        'swatch_image',
+        'links_exist',
+        'media_gallery',
+        'old_id',
+        'required_options',
+    ];
+
     /**
      * @var \Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory
      */
@@ -42,26 +65,30 @@ class Attributes implements ArrayInterface
     /**
      * Get options as array
      *
-     * @param bool $isMultiselect
      * @return array
      */
-    public function toOptionArray($isMultiselect = false)
+    public function toOptionArray()
     {
-        if (!$this->options) {
-            $collection = $this->collection->create();
+        if ($this->options) {
+            return $this->options;
+        }
+        $collection = $this->collection->create();
 
-            foreach ($collection as $items) {
-                $attributes[] = [
-                    'value' => $items->getAttributeCode(),
-                    'label' => $items->getFrontendLabel()
-                ];
+        $attributes = [];
+        foreach ($collection as $item) {
+            if (empty($item->getFrontendLabel()) || in_array($item->getAttributeCode(), self::BLACK_LIST)) {
+                continue;
             }
-            $this->options = $attributes;
+            $attributes[] = [
+                'value' => $item->getAttributeCode(),
+                'label' => $item->getFrontendLabel()
+            ];
         }
+        $this->options = $attributes;
+
         $options = $this->options;
-        if (!$isMultiselect) {
-            array_unshift($options, ['value' => '', 'label' => __('--Please Select--')]);
-        }
+        array_unshift($options, ['value' => '', 'label' => __('--Please Select--')]);
+
         return $options;
     }
 }
