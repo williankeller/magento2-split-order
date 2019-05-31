@@ -56,15 +56,12 @@ class Success extends \Magento\Checkout\Block\Onepage\Success
      */
     public function getOrderArray()
     {
-        $splittedOrders = $this->checkoutSession->getOrderIds();
-        // Remove session.
+        $splitOrders = $this->checkoutSession->getOrderIds();
         $this->checkoutSession->unsOrderIds();
 
-        // If number of orders is just like one, kill function.
-        if (count($splittedOrders) <= 1) {
+        if (empty($splitOrders) || count($splitOrders) <= 1) {
             return false;
         }
-        // Return prepared block data.
-        return $splittedOrders;
+        return $splitOrders;
     }
 }

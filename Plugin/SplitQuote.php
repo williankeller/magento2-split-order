@@ -71,28 +71,30 @@ class SplitQuote
      * @param string $payment
      * @return mixed
      * @throws LocalizedException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @see \Magento\Quote\Api\CartManagementInterface
      */
     public function aroundPlaceOrder(QuoteManagement $subject, callable $proceed, $cartId, $payment = null)
     {
-        $quote = $this->quoteRepository->getActive($cartId);
+        $currentQuote = $this->quoteRepository->getActive($cartId);
 
         // Separate all items in quote into new quotes.
-        $quotes = $this->quoteHandler->normalizeQuotes($quote);
+        $quotes = $this->quoteHandler->normalizeQuotes($currentQuote);
         if (empty($quotes)) {
             return $result = array_values([($proceed($cartId, $payment))]);
         }
         // Collect list of data addresses.
-        $addresses = $this->quoteHandler->collectAddressesData($quote);
+        $addresses = $this->quoteHandler->collectAddressesData($currentQuote);
 
+        /** @var \Magento\Sales\Api\Data\OrderInterface[] $orders */
+        $orders = [];
+        $orderIds = [];
         foreach ($quotes as $items) {
-            // Init Quote Split.
+            /** @var \Magento\Quote\Model\Quote $split */
             $split = $this->quoteFactory->create();
 
             // Set all customer definition data.
-            $this->quoteHandler->setCustomerData($quote, $split);
-
-            // Save splitted quote in order to have a quote item Id.
+            $this->quoteHandler->setCustomerData($currentQuote, $split);
             $this->toSaveQuote($split);
 
             // Map quote items.
@@ -101,7 +103,6 @@ class SplitQuote
                 $item->setId(null);
                 $split->addItem($item);
             }
-            // Recollect order totals.
             $this->quoteHandler->populateQuote($quotes, $split, $items, $addresses, $payment);
 
             // Dispatch event as Magento standard once per each quote split.
@@ -117,23 +118,18 @@ class SplitQuote
             $orderIds[$order->getId()] = $order->getIncrementId();
 
             if (null == $order) {
-                throw new LocalizedException('Please try to place the order again.');
+                throw new LocalizedException(__('Please try to place the order again.'));
             }
         }
-        // Disable origin quote.
-        $quote->setIsActive(false);
-        // To save quote.
-        $this->toSaveQuote($quote);
+        $currentQuote->setIsActive(false);
+        $this->toSaveQuote($currentQuote);
 
-        // Define checkout sessions.
         $this->quoteHandler->defineSessions($split, $order, $orderIds);
 
-        // Dispatch event.
         $this->eventManager->dispatch(
             'checkout_submit_all_after',
-            ['orders' => $orders, 'quote' => $quote]
+            ['orders' => $orders, 'quote' => $currentQuote]
         );
-
         return $this->getOrderKeys($orderIds);
     }
 

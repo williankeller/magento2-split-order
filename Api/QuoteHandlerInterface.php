@@ -91,7 +91,7 @@ interface QuoteHandlerInterface
      * Define checkout sessions.
      *
      * @param \Magento\Quote\Model\Quote $split
-     * @param \Magento\Sales\Model\Order $order
+     * @param \Magento\Framework\Model\AbstractExtensibleModel|\Magento\Sales\Api\Data\OrderInterface|object|null $order
      * @param array $orderIds
      * @return \Magestat\SplitOrder\Api\QuoteHandlerInterface
      */
