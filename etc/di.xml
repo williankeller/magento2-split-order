@@ -13,6 +13,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <!-- API Preferences -->
     <preference for="Magestat\SplitOrder\Api\QuoteHandlerInterface" type="Magestat\SplitOrder\Model\QuoteHandler"/>
+    <preference for="Magestat\SplitOrder\Api\ExtensionAttributesInterface" type="Magestat\SplitOrder\Model\ExtensionAttributes"/>
 
     <!-- Plugins -->
     <type name="Magento\Quote\Model\QuoteManagement">
