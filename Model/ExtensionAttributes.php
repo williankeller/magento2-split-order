@@ -56,7 +56,7 @@ class ExtensionAttributes implements ExtensionAttributesInterface
         if ($this->helperData->getQtyType() === 'qty') {
             return $attributes->getStockItem()->getQty();
         }
-        if ($this->helperData->getBackorder() && $attributes->getStockItem()->getQty() < 0) {
+        if ($this->helperData->getBackorder() && $attributes->getStockItem()->getQty() < 1) {
             return 'out';
         }
         return ($attributes->getStockItem()->getIsInStock()) ? 'in' : 'out';
