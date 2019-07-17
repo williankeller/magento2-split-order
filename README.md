@@ -5,10 +5,9 @@ This extension allows your online store to split the order into an order for eac
 [![Build Status](https://travis-ci.org/magestat/magento2-split-order.svg?branch=develop)](https://travis-ci.org/magestat/magento2-split-order) [![Packagist](https://img.shields.io/packagist/v/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order) [![Downloads](https://img.shields.io/packagist/dt/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order)
 
 
-## 1. Installation
+## Installation
 
-### Install via composer (recommend)
-
+### Install via composer (recommended)
 
 Run the following command in Magento 2 root folder:
 ```sh
@@ -39,7 +38,7 @@ php bin/magento cache:clean
 
 ## 3. Configuration
 
-1. Go to **Stores** > **Configuration** > **Magestat** > **Split Order**.
+1. Go to **STORES** > **Configuration** > **MAGESTAT** > **Split Order**.
 2. Select **Enabled** option to enable module.
 3. Change the options selecting the attribute to split the order just like you want.
 
@@ -51,7 +50,8 @@ Want to contribute to this extension? The quickest way is to open a [pull reques
 ## Support
 
 If you encounter any problems or bugs, please open an issue on [GitHub](https://github.com/magestat/magento2-split-order/issues).
-Need help setting up or want to customize this extension to meet your business needs? Please email willianlkeller@outlook.com and if we like your idea we will add this feature for free or at a discounted rate.
+
+Need help setting up or want to customize this extension to meet your business needs? Please open an issue and if we like your idea we will add this feature for free.
 
 ## Known issues
 
