@@ -12,7 +12,7 @@
 
 namespace Magestat\SplitOrder\Model;
 
-use Magento\Checkout\Model\Session\Proxy as CheckoutSession;
+use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Quote\Api\CartManagementInterface;
 use Magento\Customer\Api\Data\GroupInterface;
 use Magestat\SplitOrder\Api\QuoteHandlerInterface;
@@ -25,17 +25,17 @@ use Magestat\SplitOrder\Api\ExtensionAttributesInterface;
 class QuoteHandler implements QuoteHandlerInterface
 {
     /**
-     * @var \Magento\Checkout\Model\Session\Proxy
+     * @var Session
      */
     private $checkoutSession;
 
     /**
-     * @var \Magestat\SplitOrder\Helper\Data
+     * @var Data
      */
     private $helperData;
 
     /**
-     * @var \Magestat\SplitOrder\Api\ExtensionAttributesInterface
+     * @var ExtensionAttributesInterface
      */
     private $extensionAttributes;
 
