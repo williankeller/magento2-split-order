@@ -25,4 +25,11 @@
 
     <!-- Override -->
     <preference for="Magento\Checkout\Block\Onepage\Success" type="Magestat\SplitOrder\Block\Checkout\Success"/>
+
+    <!-- Proxies -->
+    <type name="Magestat\SplitOrder\Model\QuoteHandler">
+        <arguments>
+            <argument name="QuoteHandler" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
 </config>
