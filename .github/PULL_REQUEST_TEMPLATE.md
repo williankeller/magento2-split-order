@@ -22,14 +22,6 @@
 1. magestat/magento2-split-order#<issue_number>: Issue title
 2. ...
 
-### Manual testing scenarios
-<!---
-    Please provide a set of unambiguous steps to test the proposed code change.
-    Giving us manual testing scenarios will help with the processing and validation process.
--->
-1. ...
-2. ...
-
 ### Contribution checklist
  - [ ] Pull request has a meaningful description of its purpose
  - [ ] All commits are accompanied by meaningful commit messages
