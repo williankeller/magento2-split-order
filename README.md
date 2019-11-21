@@ -18,7 +18,7 @@ composer require magestat/module-split-order
 
 Run the following command in Magento 2 root folder:
 ```sh
-git clone git@github.com:magestat/magento2-split-order.git app/code/Magestat/SplitOrder
+git clone git@github.com:williankeller/magento2-split-order.git app/code/Magestat/SplitOrder
 ```
 
 ## 2. Activation
@@ -56,6 +56,3 @@ Need help setting up or want to customize this extension to meet your business n
 ## Known issues
 
 1. [Doesn't work with Braintree, Paypal via Braintree, Paypal Express Checkout](https://github.com/magestat/magento2-split-order/issues/10)
-
-
-© Magestat.
