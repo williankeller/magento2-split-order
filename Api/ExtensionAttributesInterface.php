@@ -13,7 +13,6 @@ namespace Magestat\SplitOrder\Api;
 
 /**
  * Interface ExtensionAttributesInterface
- * @package Magestat\SplitOrder\Api
  * @api
  */
 interface ExtensionAttributesInterface

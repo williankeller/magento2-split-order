@@ -17,7 +17,7 @@ use Magestat\SplitOrder\Api\ExtensionAttributesInterface;
 
 /**
  * Class ExtensionAttributes
- * @package Magestat\SplitOrder\Model
+ * Responsible to load products attributes.
  */
 class ExtensionAttributes implements ExtensionAttributesInterface
 {

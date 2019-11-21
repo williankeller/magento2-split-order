@@ -20,7 +20,8 @@ use Magento\Framework\Event\ManagerInterface;
 use Magestat\SplitOrder\Api\QuoteHandlerInterface;
 
 /**
- * @package Magestat\SplitOrder\Plugin
+ * Class SplitQuote
+ * Interceptor to \Magento\Quote\Model\QuoteManagement
  */
 class SplitQuote
 {

@@ -13,6 +13,7 @@
 namespace Magestat\SplitOrder\Api;
 
 /**
+ * Interface QuoteHandlerInterface
  * @api
  */
 interface QuoteHandlerInterface

@@ -16,7 +16,8 @@ use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 
 /**
- * @package Magestat\SplitOrder\Model\Config\Source
+ * Class AttributeQty
+ * Options source to manage the stock.
  */
 class AttributeQty implements OptionSourceInterface
 {

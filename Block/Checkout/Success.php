@@ -18,7 +18,8 @@ use Magento\Sales\Model\Order\Config;
 use Magento\Framework\App\Http\Context as HttpContext;
 
 /**
- * @package Magestat\SplitOrder\Block\Checkout
+ * Class Success
+ * Overriding Magento One page success
  */
 class Success extends \Magento\Checkout\Block\Onepage\Success
 {

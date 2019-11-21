@@ -20,7 +20,8 @@ use Magestat\SplitOrder\Helper\Data as HelperData;
 use Magestat\SplitOrder\Api\ExtensionAttributesInterface;
 
 /**
- * @package Magestat\SplitOrder\Model
+ * Class QuoteHandler
+ * Responsible to build some methods from the quote.
  */
 class QuoteHandler implements QuoteHandlerInterface
 {
