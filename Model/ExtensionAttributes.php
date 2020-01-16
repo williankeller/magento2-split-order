@@ -1,15 +1,5 @@
 <?php
 
-/**
- * A Magento 2 module named Magestat/SplitOrder
- * Copyright (C) 2018 Magestat
- *
- * This file included in Magestat/SplitOrder is licensed under OSL 3.0
- *
- * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * Please see LICENSE.txt for the full text of the OSL 3.0 license
- */
-
 namespace Magestat\SplitOrder\Model;
 
 use Magestat\SplitOrder\Helper\Data as HelperData;
@@ -22,7 +12,7 @@ use Magestat\SplitOrder\Api\ExtensionAttributesInterface;
 class ExtensionAttributes implements ExtensionAttributesInterface
 {
     /**
-     * @var \Magestat\SplitOrder\Helper\Data
+     * @var HelperData
      */
     private $helperData;
 

@@ -1,15 +1,5 @@
 <?php
 
-/**
- * A Magento 2 module named Magestat/SplitOrder
- * Copyright (C) 2018 Magestat
- *
- * This file included in Magestat/SplitOrder is licensed under OSL 3.0
- *
- * http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * Please see LICENSE.txt for the full text of the OSL 3.0 license
- */
-
 namespace Magestat\SplitOrder\Plugin;
 
 use Magento\Quote\Model\QuoteManagement;
@@ -26,22 +16,22 @@ use Magestat\SplitOrder\Api\QuoteHandlerInterface;
 class SplitQuote
 {
     /**
-     * @var \Magento\Quote\Api\CartRepositoryInterface
+     * @var CartRepositoryInterface
      */
     private $quoteRepository;
 
     /**
-     * @var \Magento\Quote\Model\QuoteFactory
+     * @var QuoteFactory
      */
     private $quoteFactory;
 
     /**
-     * @var \Magento\Framework\Event\ManagerInterface
+     * @var ManagerInterface
      */
     private $eventManager;
 
     /**
-     * @var \Magestat\SplitOrder\Api\QuoteHandlerInterface
+     * @var QuoteHandlerInterface
      */
     private $quoteHandler;
 

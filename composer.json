@@ -1,6 +1,6 @@
 {
     "name": "magestat/module-split-order",
-    "description": "This extension allows your online store to split the order into an order for each item in the cart.",
+    "description": "This extension allows your Magento store to split the order into an order for each item in the cart.",
     "keywords": [
         "magento 2",
         "magento extension",
@@ -17,11 +17,6 @@
     "version": "1.0.6",
     "support": {
         "issues": "https://github.com/magestat/magento2-split-order/issues/"
-    },
-    "require": {
-        "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.1.3|~7.2.0",
-        "magento/module-backend": "100.0.*|100.1.*|100.2.*|100.3.*|101.0.*",
-        "magento/framework": "100.0.*|100.1.*|100.2.*|100.3.*|101.0.*"
     },
     "require-dev": {
         "phpmd/phpmd": "@stable",
