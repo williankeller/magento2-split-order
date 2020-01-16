@@ -2,7 +2,7 @@
 
 This extension allows your Magento store to split the order into an order for each item in the cart. With different order IDs, customers can view all the order ids in their Order History and track each item separately. The Magento admin generate separate invoices and shipments for each splitted order. Shipping charges and tax are also split based on items. This extension Magento 2 default offline payment methods: Check / Money Order and Cash on Delivery.
 
-[![Build Status](https://travis-ci.org/magestat/magento2-split-order.svg?branch=develop)](https://travis-ci.org/williankeller/magento2-split-order) [![Packagist](https://img.shields.io/packagist/v/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order) [![Downloads](https://img.shields.io/packagist/dt/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order)
+[![Build Status](https://travis-ci.org/magestat/magento2-split-order.svg?branch=develop)](https://travis-ci.org/magestat/magento2-split-order) [![Packagist](https://img.shields.io/packagist/v/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order) [![Downloads](https://img.shields.io/packagist/dt/magestat/module-split-order.svg)](https://packagist.org/packages/magestat/module-split-order)
 
 
 ## Installation
