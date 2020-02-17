@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+### [1.0.7](https://github.com/magestat/magento2-split-order/releases/tag/1.0.7) - 02-17-2020
+#### Added
+- ACL for this module
+
 ### [1.0.6](https://github.com/magestat/magento2-split-order/releases/tag/1.0.6) - 05/31/2019
 #### Added
 - Split Order Based on the Product Stock Status.
